@@ -1,0 +1,18 @@
+CACHE MANIFEST
+# 2016.05.08 - v17
+
+# Archivos que se guardaran en cache.
+CACHE:
+favicon.ico
+index.html
+jquery-2.2.3.min.js
+utilsJS.js
+off.jpg
+
+# Recursos que se tomaran de la red. El comodin '*' actualiza todo.
+NETWORK:
+*
+
+# En caso de no poder al recursos, mostrara lo siguiente.
+FALLBACK:
+# No se han asignado recursos.

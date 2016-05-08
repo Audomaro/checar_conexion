@@ -1,0 +1,100 @@
+<!-- 
+    Opcion
+    https://www.gavick.com/blog/detect-offline-browser
+-->
+<!DOCTYPE html>
+<html manifest="app.mf">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Prueba de checar conexion a internet</title>
+    <link href="offline-theme-chrome-indicator.css" rel="stylesheet">
+    <link href="offline-language-spanish-indicator.css" rel="stylesheet">
+
+</head>
+
+<body>
+    <div>
+        <h3>
+            <a href="#" id="btnChecarConexion">Checar conexion v11</a>
+        </h3>
+
+    </div>
+
+    <center>
+        <img id="imgEstado" src="">
+    </center>
+
+    <script src="jquery-2.2.3.min.js"></script>
+    <script src="offline.min.js"></script>
+
+    <script>
+        (function($) {
+
+            Offline.options = {
+                // Should we check the connection status immediatly on page load.
+                checkOnLoad: false,
+                // Should we monitor AJAX requests to help decide if we have a connection.
+                interceptRequests: true,
+                // Should we automatically retest periodically when the connection is down (set to false to disable).
+                reconnect: {
+                    // How many seconds should we wait before rechecking.
+                    initialDelay: 10,
+                    // How long should we wait between retries.
+                    delay: (1.5 * 1)
+                },
+                // Should we store and attempt to remake requests which fail while the connection is down.
+                requests: true,
+                // Should we show a snake game while the connection is down to keep the user entertained?
+                // It's not included in the normal build, you should bring in js/snake.js in addition to
+                // offline.min.js.
+                game: false
+            }
+
+            Offline.check();
+            //Offline.on('up', alert('up'));
+            // Offline.on('down', alert('down'));
+
+
+            var ip = location.host; // Ip del servidor
+
+            function verificarConexionInternet() {
+                let xhr = new XMLHttpRequest(),
+                    file = 'http://' + ip + '/on.png',
+                    randomNum = Math.round(Math.random() * 10000);
+
+                xhr.open('HEAD', file + "?r=" + randomNum, false);
+
+                try {
+                    xhr.send();
+
+                    if (xhr.status >= 200 && xhr.status < 304) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            $('#btnChecarConexion').on('click', function(e) {
+                if (verificarConexionInternet()) {
+                    $('#imgEstado').attr('src', 'on.png');
+                } else {
+                    $('#imgEstado').attr('src', 'off.jpg');
+                }
+            });
+
+        }(jQuery));
+
+    </script>
+</body>
+
+</html>
